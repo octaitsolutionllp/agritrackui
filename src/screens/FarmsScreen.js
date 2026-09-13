@@ -2,7 +2,9 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import { FlatList, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { createFarm, createField, listFarms } from '../api/farms';
+import { listCropCycles } from '../api/cropCycles';
 import { parseOptionalNumber } from '../utils/numbers';
+import { translateCropName } from '../utils/cropNames';
 import EmptyState from '../components/EmptyState';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Screen from '../components/Screen';
@@ -16,12 +18,21 @@ export default function FarmsScreen() {
 
   const [loading, setLoading] = useState(true);
   const [farms, setFarms] = useState([]);
+  const [activeCycleByFieldId, setActiveCycleByFieldId] = useState({});
   const [addFarmVisible, setAddFarmVisible] = useState(false);
   const [addFieldFarmId, setAddFieldFarmId] = useState(null);
 
   const load = useCallback(async () => {
-    const data = await listFarms();
-    setFarms(data);
+    const [farmsData, activeCycles] = await Promise.all([listFarms(), listCropCycles('Active')]);
+    setFarms(farmsData);
+    // Sp_GetCropCyclesByUser orders by CreatedAt DESC, so the first cycle seen per
+    // field is the most recently started one — a field only ever has one active cycle
+    // in practice, but this guards against a stray duplicate.
+    const byField = {};
+    for (const cycle of activeCycles) {
+      if (!byField[cycle.fieldId]) byField[cycle.fieldId] = cycle;
+    }
+    setActiveCycleByFieldId(byField);
   }, []);
 
   useFocusEffect(
@@ -59,15 +70,25 @@ export default function FarmsScreen() {
                 </Text>
               ) : null}
             </View>
-            {item.fields.map((field) => (
-              <View key={field.id} style={styles.fieldRow}>
-                <Text style={styles.fieldName}>{field.name}</Text>
-                <Text style={styles.fieldMeta}>
-                  {field.areaAcres ? `${field.areaAcres} ${t.acres}` : t.empty}
-                  {field.soilType ? ` · ${field.soilType}` : ''}
-                </Text>
-              </View>
-            ))}
+            {item.fields.map((field) => {
+              const activeCycle = activeCycleByFieldId[field.id];
+              return (
+                <View key={field.id} style={styles.fieldRow}>
+                  <View style={styles.fieldRowMain}>
+                    <Text style={styles.fieldName}>{field.name}</Text>
+                    <Text style={styles.fieldMeta}>
+                      {field.areaAcres ? `${field.areaAcres} ${t.acres}` : t.empty}
+                      {field.soilType ? ` · ${field.soilType}` : ''}
+                    </Text>
+                  </View>
+                  <Text style={activeCycle ? styles.fieldCropActive : styles.fieldCropEmpty}>
+                    {activeCycle
+                      ? `${translateCropName(activeCycle.cropTypeName, strings.common)} · ${activeCycle.currentStage}`
+                      : t.noActiveCrop}
+                  </Text>
+                </View>
+              );
+            })}
             <Pressable style={styles.addFieldLink} onPress={() => setAddFieldFarmId(item.id)}>
               <Text style={styles.addFieldLinkText}>{t.addBtn}</Text>
             </Pressable>
@@ -204,15 +225,16 @@ const styles = StyleSheet.create({
   farmName: { fontSize: 18, fontWeight: '600', color: colors.ink },
   farmArea: { fontSize: 13, color: colors.mutedInk },
   fieldRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: colors.dashedBorder,
     borderStyle: 'dashed',
   },
+  fieldRowMain: { flexDirection: 'row', justifyContent: 'space-between' },
   fieldName: { fontSize: 15, color: colors.ink },
   fieldMeta: { fontSize: 13, color: colors.mutedInk },
+  fieldCropActive: { fontSize: 13, color: colors.accentDark, marginTop: 2 },
+  fieldCropEmpty: { fontSize: 13, color: colors.mutedInk, fontStyle: 'italic', marginTop: 2 },
   addFieldLink: { marginTop: 8 },
   addFieldLinkText: { color: colors.accentDark, fontSize: 14, fontWeight: '500' },
   backdrop: { flex: 1, backgroundColor: 'rgba(51,64,47,0.35)' },

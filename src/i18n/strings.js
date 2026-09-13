@@ -40,6 +40,7 @@ export const strings = {
       acres: 'acres',
       empty: 'empty',
       noFarms: 'No farms yet — add your first one',
+      noActiveCrop: 'No active crop cycle',
     },
     cropCycle: {
       sownLabel: 'Sown',
@@ -173,6 +174,7 @@ export const strings = {
       acres: 'एकड़',
       empty: 'खाली',
       noFarms: 'अभी तक कोई खेत नहीं — पहला जोड़ें',
+      noActiveCrop: 'कोई सक्रिय फसल चक्र नहीं',
     },
     cropCycle: {
       sownLabel: 'बुवाई',
@@ -306,6 +308,7 @@ export const strings = {
       acres: 'एकर',
       empty: 'रिकामे',
       noFarms: 'अजून शेत नाही — पहिले जोडा',
+      noActiveCrop: 'सक्रिय पीक चक्र नाही',
     },
     cropCycle: {
       sownLabel: 'पेरणी',
