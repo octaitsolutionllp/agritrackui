@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Patrick Hand', 'Noto Sans Devanagari', cursive; color: #33402f; }
+    a { color: #6b8a5a; } a:hover { color: #4f6a41; }
+    .frame { width: 390px; height: 844px; background: #faf7f0; border: 2.5px solid #33402f; border-radius: 30px; box-sizing: border-box; overflow: hidden; position: relative; }
+    .screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    .row { display:flex; justify-content:space-between; align-items:center; padding:12px 4px; border-bottom:1.5px dashed #cfc9b8; font-size:15px; }
+    .btn-outline { border: 2px solid #33402f; border-radius: 8px; padding: 12px; text-align: center; font-size: 16px; background: #fff; }
+    .tag { font-size:12px; color:#8a8578; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="screen">
+    <div style="padding:20px 20px 4px;">
+      <div style="font-size:21px;">{{title}}</div>
+      <div style="font-size:14px; color:#8a8578;">{{tomato}} · {{fieldA}}</div>
+    </div>
+
+    <div style="padding: 10px 20px; flex:1;">
+      <div class="row"><span>{{seeds}}</span><span style="flex:1; padding-left:10px;" class="tag">{{date1}}</span><span>₹2,000</span></div>
+      <div class="row"><span>{{fertilizer}}</span><span style="flex:1; padding-left:10px;" class="tag">{{date2}}</span><span>₹3,500</span></div>
+      <div class="row"><span>{{labor}}</span><span style="flex:1; padding-left:10px;" class="tag">{{date3}}</span><span>₹6,000</span></div>
+      <div class="row" style="border-bottom:none;"><span>{{pesticide}}</span><span style="flex:1; padding-left:10px;" class="tag">{{date4}}</span><span>₹1,200</span></div>
+    </div>
+
+    <div style="padding: 0 20px 16px;">
+      <div style="display:flex; justify-content:space-between; font-size:18px; border-top:2px solid #33402f; padding-top:10px;">
+        <span>{{total}}</span><span>₹12,700</span>
+      </div>
+    </div>
+
+    <div style="padding:0 20px 24px;">
+      <div class="btn-outline">{{addExpenseBtn}}</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"lang":{"editor":"enum","default":"mr","options":["en","hi","mr"],"section":"Language"}}'>
+const STRINGS = {
+  en: { title: 'Expenses', tomato: 'Tomato', fieldA: 'Field A', seeds: 'Seeds', fertilizer: 'Fertilizer', labor: 'Labor', pesticide: 'Pesticide',
+    date1: '12 Jul', date2: '20 Jul', date3: '05 Aug', date4: '15 Aug', total: 'Total', addExpenseBtn: '+ Add Expense' },
+  hi: { title: 'खर्च', tomato: 'टमाटर', fieldA: 'खेत A', seeds: 'बीज', fertilizer: 'उर्वरक', labor: 'मजदूरी', pesticide: 'कीटनाशक',
+    date1: '12 जुलाई', date2: '20 जुलाई', date3: '05 अगस्त', date4: '15 अगस्त', total: 'कुल', addExpenseBtn: '+ खर्च जोड़ें' },
+  mr: { title: 'खर्च', tomato: 'टोमॅटो', fieldA: 'शेत A', seeds: 'बियाणे', fertilizer: 'खत', labor: 'मजुरी', pesticide: 'कीटकनाशक',
+    date1: '12 जुलै', date2: '20 जुलै', date3: '05 ऑगस्ट', date4: '15 ऑगस्ट', total: 'एकूण', addExpenseBtn: '+ खर्च जोडा' }
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const current = this.props.lang || 'mr';
+    return { ...STRINGS[current] };
+  }
+}
+</script>
+</body>
+</html>

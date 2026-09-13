@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Patrick Hand', 'Noto Sans Devanagari', cursive; color: #33402f; }
+    a { color: #6b8a5a; } a:hover { color: #4f6a41; }
+    .frame { width: 390px; height: 844px; background: #faf7f0; border: 2.5px solid #33402f; border-radius: 30px; box-sizing: border-box; overflow: hidden; position: relative; }
+    .screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    .card { border: 2px solid #33402f; border-radius: 10px; background: #fff; padding: 14px; }
+    .dashed { border: 2px dashed #33402f; }
+    .pill { border: 2px solid #33402f; border-radius: 999px; padding: 4px 12px; font-size: 14px; }
+    .navitem { display:flex; flex-direction:column; align-items:center; gap:2px; font-size:12px; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="screen">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:20px 20px 10px;">
+      <div style="font-size:22px;">{{greeting}}</div>
+      <div style="position:relative;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="1.6"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <div style="position:absolute; top:-6px; right:-6px; background:#b5533c; color:#fff; border-radius:50%; width:16px; height:16px; font-size:11px; display:flex; align-items:center; justify-content:center;">3</div>
+      </div>
+    </div>
+
+    <div style="padding: 6px 20px;">
+      <div class="card">
+        <div style="font-size:16px; color:#8a8578; margin-bottom:8px;">{{seasonLabel}}</div>
+        <div style="display:flex; justify-content:space-between;">
+          <div>
+            <div style="font-size:14px; color:#8a8578;">{{income}}</div>
+            <div style="font-size:20px;">₹85,000</div>
+          </div>
+          <div>
+            <div style="font-size:14px; color:#8a8578;">{{expense}}</div>
+            <div style="font-size:20px;">₹52,000</div>
+          </div>
+          <div>
+            <div style="font-size:14px; color:#8a8578;">{{profit}}</div>
+            <div style="font-size:20px; color:#6b8a5a;">▲ ₹33,000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding: 10px 20px 0;">
+      <div style="font-size:17px; margin-bottom:8px;">{{remindersToday}}</div>
+      <div class="card dashed" style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="1.6"><path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/></svg>
+        <div style="flex:1; font-size:15px;">{{waterReminder}}</div>
+      </div>
+      <div class="card dashed" style="display:flex; align-items:center; gap:10px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.5 4.5l2 2M17.5 17.5l2 2M4.5 19.5l2-2M17.5 6.5l2-2"/></svg>
+        <div style="flex:1; font-size:15px;">{{pesticideReminder}}</div>
+      </div>
+    </div>
+
+    <div style="padding: 14px 20px 0; flex:1; min-height:0;">
+      <div style="font-size:17px; margin-bottom:8px;">{{activeCycles}}</div>
+      <div style="display:flex; gap:12px;">
+        <div class="card" style="flex:1;">
+          <div style="font-size:16px;">{{tomato}}</div>
+          <div style="font-size:13px; color:#8a8578;">{{fieldA}}</div>
+          <div class="pill" style="margin-top:8px; display:inline-block;">{{flowering}}</div>
+        </div>
+        <div class="card" style="flex:1;">
+          <div style="font-size:16px;">{{wheat}}</div>
+          <div style="font-size:13px; color:#8a8578;">{{fieldB}}</div>
+          <div class="pill" style="margin-top:8px; display:inline-block;">{{vegetative}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="border-top:2px solid #33402f; display:flex; justify-content:space-around; padding:10px 6px 16px; background:#fff;">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="1.6"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/></svg>{{navHome}}</div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a8578" stroke-width="1.6"><path d="M3 21h18"/><path d="M6 21V9l6-4 6 4v12"/></svg>{{navFarms}}</div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a8578" stroke-width="1.6"><path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/></svg>{{navCycles}}</div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a8578" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>{{navExpenses}}</div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a8578" stroke-width="1.6"><path d="M4 19V10M12 19V4M20 19v-7"/></svg>{{navReports}}</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"lang":{"editor":"enum","default":"mr","options":["en","hi","mr"],"section":"Language"}}'>
+const STRINGS = {
+  en: {
+    greeting: 'Hi, Ramesh', seasonLabel: 'This Season', income: 'Income', expense: 'Expense', profit: 'Profit',
+    remindersToday: 'Reminders today', waterReminder: 'Water Field A · Tomato', pesticideReminder: 'Pesticide Field B · Wheat',
+    activeCycles: 'Active crop cycles', tomato: 'Tomato', wheat: 'Wheat', fieldA: 'Field A', fieldB: 'Field B',
+    flowering: 'Flowering', vegetative: 'Vegetative',
+    navHome: 'Home', navFarms: 'Farms', navCycles: 'Cycles', navExpenses: 'Expenses', navReports: 'Reports'
+  },
+  hi: {
+    greeting: 'नमस्ते, रमेश', seasonLabel: 'इस मौसम में', income: 'आय', expense: 'खर्च', profit: 'लाभ',
+    remindersToday: 'आज के अनुस्मारक', waterReminder: 'खेत A को पानी दें · टमाटर', pesticideReminder: 'खेत B में कीटनाशक · गेहूं',
+    activeCycles: 'चालू फसल चक्र', tomato: 'टमाटर', wheat: 'गेहूं', fieldA: 'खेत A', fieldB: 'खेत B',
+    flowering: 'फूल अवस्था', vegetative: 'वानस्पतिक अवस्था',
+    navHome: 'होम', navFarms: 'खेत', navCycles: 'चक्र', navExpenses: 'खर्च', navReports: 'रिपोर्ट'
+  },
+  mr: {
+    greeting: 'नमस्कार, रमेश', seasonLabel: 'या हंगामात', income: 'उत्पन्न', expense: 'खर्च', profit: 'नफा',
+    remindersToday: 'आजच्या सूचना', waterReminder: 'शेत A ला पाणी द्या · टोमॅटो', pesticideReminder: 'शेत B मध्ये कीटकनाशक · गहू',
+    activeCycles: 'सुरू असलेली पीक चक्रे', tomato: 'टोमॅटो', wheat: 'गहू', fieldA: 'शेत A', fieldB: 'शेत B',
+    flowering: 'फुलोरा अवस्था', vegetative: 'वाढीची अवस्था',
+    navHome: 'मुख्यपृष्ठ', navFarms: 'शेत', navCycles: 'चक्रे', navExpenses: 'खर्च', navReports: 'अहवाल'
+  }
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const current = this.props.lang || 'mr';
+    return { ...STRINGS[current] };
+  }
+}
+</script>
+</body>
+</html>

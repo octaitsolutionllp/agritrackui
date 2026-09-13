@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Patrick Hand', 'Noto Sans Devanagari', cursive; color: #33402f; }
+    a { color: #6b8a5a; } a:hover { color: #4f6a41; }
+    .frame { width: 390px; height: 844px; background: #faf7f0; border: 2.5px solid #33402f; border-radius: 30px; box-sizing: border-box; overflow: hidden; position: relative; }
+    .screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    .card { border: 2px solid #33402f; border-radius: 10px; background: #fff; padding: 14px; }
+    .btn { border: 2px solid #33402f; border-radius: 8px; padding: 10px; text-align: center; font-size: 16px; background: #6b8a5a; color: #faf7f0; }
+    .btn-outline { border: 2px solid #33402f; border-radius: 8px; padding: 10px; text-align: center; font-size: 15px; background: #fff; }
+    .dot { width:16px; height:16px; border-radius:50%; border:2px solid #33402f; background:#6b8a5a; }
+    .dot-empty { width:16px; height:16px; border-radius:50%; border:2px solid #33402f; background:#faf7f0; }
+    .line { flex:1; height:2px; background:#33402f; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="screen">
+    <div style="display:flex; align-items:center; gap:10px; padding:20px 20px 6px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+      <div style="font-size:20px;">{{fieldA}} · {{tomato}}</div>
+    </div>
+    <div style="padding:0 20px 10px; font-size:14px; color:#8a8578;">{{sownDate}} &nbsp;·&nbsp; {{harvestDate}}</div>
+
+    <div style="padding: 0 20px 16px;">
+      <div class="card">
+        <div style="font-size:15px; color:#8a8578; margin-bottom:10px;">{{stageProgress}}</div>
+        <div style="display:flex; align-items:center;">
+          <div class="dot"></div><div class="line"></div>
+          <div class="dot"></div><div class="line"></div>
+          <div class="dot" style="background:#faf7f0;"></div><div class="line" style="background:#cfc9b8;"></div>
+          <div class="dot-empty" style="border-color:#cfc9b8;"></div><div class="line" style="background:#cfc9b8;"></div>
+          <div class="dot-empty" style="border-color:#cfc9b8;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:#8a8578; margin-top:4px;">
+          <span>{{stageSow}}</span><span>{{stageGerm}}</span><span>{{stageVeg}}</span><span>{{stageFlower}}</span><span>{{stageFruit}}</span>
+        </div>
+        <div class="btn" style="margin-top:12px;">{{advanceStage}}</div>
+      </div>
+    </div>
+
+    <div style="padding:0 20px; flex:1;">
+      <div style="font-size:17px; margin-bottom:8px;">{{recentActivity}}</div>
+      <div class="card" style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="1.6"><path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/></svg>
+        <div style="flex:1; font-size:15px;">{{watered}}</div>
+        <div style="font-size:13px; color:#8a8578;">{{daysAgo2}}</div>
+      </div>
+      <div class="card" style="display:flex; align-items:center; gap:10px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        <div style="flex:1; font-size:15px;">{{pesticideApplied}}</div>
+        <div style="font-size:13px; color:#8a8578;">{{daysAgo9}}</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:12px; padding:14px 20px 20px;">
+      <div class="btn-outline" style="flex:1;">{{logActivityBtn}}</div>
+      <div class="btn-outline" style="flex:1;">{{addExpenseBtn}}</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"lang":{"editor":"enum","default":"mr","options":["en","hi","mr"],"section":"Language"}}'>
+const STRINGS = {
+  en: {
+    fieldA: 'Field A', tomato: 'Tomato', sownDate: 'Sown 12 Jul', harvestDate: 'Expected harvest 30 Oct',
+    stageProgress: 'Stage progress', stageSow: 'Sow', stageGerm: 'Germ', stageVeg: 'Veg', stageFlower: 'Flower', stageFruit: 'Fruit',
+    advanceStage: 'Advance Stage', recentActivity: 'Recent activity', watered: 'Watered', pesticideApplied: 'Pesticide applied',
+    daysAgo2: '2 days ago', daysAgo9: '9 days ago', logActivityBtn: '+ Log Activity', addExpenseBtn: '+ Add Expense'
+  },
+  hi: {
+    fieldA: 'खेत A', tomato: 'टमाटर', sownDate: 'बुवाई 12 जुलाई', harvestDate: 'अपेक्षित कटाई 30 अक्टूबर',
+    stageProgress: 'चरण प्रगति', stageSow: 'बुवाई', stageGerm: 'अंकुरण', stageVeg: 'वानस्पतिक', stageFlower: 'फूल', stageFruit: 'फल',
+    advanceStage: 'अगला चरण', recentActivity: 'हाल की गतिविधि', watered: 'पानी दिया', pesticideApplied: 'कीटनाशक डाला',
+    daysAgo2: '2 दिन पहले', daysAgo9: '9 दिन पहले', logActivityBtn: '+ गतिविधि दर्ज करें', addExpenseBtn: '+ खर्च जोड़ें'
+  },
+  mr: {
+    fieldA: 'शेत A', tomato: 'टोमॅटो', sownDate: 'पेरणी 12 जुलै', harvestDate: 'अपेक्षित कापणी 30 ऑक्टोबर',
+    stageProgress: 'टप्पा प्रगती', stageSow: 'पेरणी', stageGerm: 'उगवण', stageVeg: 'वाढ', stageFlower: 'फुलोरा', stageFruit: 'फळ',
+    advanceStage: 'पुढील टप्पा', recentActivity: 'अलीकडील क्रियाकलाप', watered: 'पाणी दिले', pesticideApplied: 'कीटकनाशक फवारले',
+    daysAgo2: '2 दिवसांपूर्वी', daysAgo9: '9 दिवसांपूर्वी', logActivityBtn: '+ नोंद करा', addExpenseBtn: '+ खर्च जोडा'
+  }
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const current = this.props.lang || 'mr';
+    return { ...STRINGS[current] };
+  }
+}
+</script>
+</body>
+</html>

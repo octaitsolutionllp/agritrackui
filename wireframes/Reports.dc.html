@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Patrick Hand', 'Noto Sans Devanagari', cursive; color: #33402f; }
+    a { color: #6b8a5a; } a:hover { color: #4f6a41; }
+    .frame { width: 390px; height: 844px; background: #faf7f0; border: 2.5px solid #33402f; border-radius: 30px; box-sizing: border-box; overflow: hidden; position: relative; }
+    .screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    .card { border: 2px solid #33402f; border-radius: 10px; background: #fff; padding: 14px; }
+    .pill { border: 2px solid #33402f; border-radius: 999px; padding: 6px 14px; font-size: 14px; display:inline-flex; align-items:center; gap:6px; }
+    .legend-dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+    .bar-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="screen">
+    <div style="padding:20px 20px 10px;">
+      <div style="font-size:21px; margin-bottom:10px;">{{title}}</div>
+      <div class="pill">{{seasonPill}}
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+
+    <div style="padding:0 20px 16px;">
+      <div class="card">
+        <div style="font-size:15px; color:#8a8578; margin-bottom:10px;">{{expenseByCategory}}</div>
+        <div style="display:flex; align-items:center; gap:20px;">
+          <svg width="110" height="110" viewBox="0 0 32 32">
+            <circle r="16" cx="16" cy="16" fill="#fff" stroke="#cfc9b8" stroke-width="0.5"/>
+            <circle r="8" cx="16" cy="16" fill="transparent" stroke="#6b8a5a" stroke-width="16" stroke-dasharray="15 85" transform="rotate(-90 16 16)"/>
+            <circle r="8" cx="16" cy="16" fill="transparent" stroke="#a3623f" stroke-width="16" stroke-dasharray="25 75" stroke-dashoffset="-15" transform="rotate(-90 16 16)"/>
+            <circle r="8" cx="16" cy="16" fill="transparent" stroke="#33402f" stroke-width="16" stroke-dasharray="35 65" stroke-dashoffset="-40" transform="rotate(-90 16 16)"/>
+            <circle r="8" cx="16" cy="16" fill="transparent" stroke="#c9b458" stroke-width="16" stroke-dasharray="25 75" stroke-dashoffset="-75" transform="rotate(-90 16 16)"/>
+          </svg>
+          <div style="display:flex; flex-direction:column; gap:6px; font-size:14px;">
+            <div><span class="legend-dot" style="background:#6b8a5a;"></span> {{seeds}} 15%</div>
+            <div><span class="legend-dot" style="background:#a3623f;"></span> {{fertilizer}} 25%</div>
+            <div><span class="legend-dot" style="background:#33402f;"></span> {{labor}} 35%</div>
+            <div><span class="legend-dot" style="background:#c9b458;"></span> {{pesticide}} 25%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:0 20px; flex:1;">
+      <div class="card">
+        <div style="font-size:15px; color:#8a8578; margin-bottom:12px;">{{perCropComparison}}</div>
+        <div class="bar-row"><div style="width:60px; font-size:14px;">{{tomato}}</div><div style="flex:1; background:#eee; border-radius:6px;"><div style="width:80%; background:#6b8a5a; height:16px; border-radius:6px;"></div></div><div style="font-size:14px;">+₹18,000</div></div>
+        <div class="bar-row"><div style="width:60px; font-size:14px;">{{wheat}}</div><div style="flex:1; background:#eee; border-radius:6px;"><div style="width:65%; background:#6b8a5a; height:16px; border-radius:6px;"></div></div><div style="font-size:14px;">+₹15,000</div></div>
+        <div class="bar-row" style="margin-bottom:0;"><div style="width:60px; font-size:14px;">{{onion}}</div><div style="flex:1; background:#eee; border-radius:6px;"><div style="width:15%; background:#b5533c; height:16px; border-radius:6px;"></div></div><div style="font-size:14px; color:#b5533c;">−₹2,000</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"lang":{"editor":"enum","default":"mr","options":["en","hi","mr"],"section":"Language"}}'>
+const STRINGS = {
+  en: { title: 'Profit & Loss', seasonPill: 'This Season', expenseByCategory: 'Expense by category', seeds: 'Seeds', fertilizer: 'Fertilizer', labor: 'Labor', pesticide: 'Pesticide',
+    perCropComparison: 'Per-crop comparison', tomato: 'Tomato', wheat: 'Wheat', onion: 'Onion' },
+  hi: { title: 'लाभ और हानि', seasonPill: 'इस मौसम', expenseByCategory: 'श्रेणी अनुसार खर्च', seeds: 'बीज', fertilizer: 'उर्वरक', labor: 'मजदूरी', pesticide: 'कीटनाशक',
+    perCropComparison: 'फसल-वार तुलना', tomato: 'टमाटर', wheat: 'गेहूं', onion: 'प्याज' },
+  mr: { title: 'नफा आणि तोटा', seasonPill: 'या हंगामात', expenseByCategory: 'प्रकारानुसार खर्च', seeds: 'बियाणे', fertilizer: 'खत', labor: 'मजुरी', pesticide: 'कीटकनाशक',
+    perCropComparison: 'पीकनिहाय तुलना', tomato: 'टोमॅटो', wheat: 'गहू', onion: 'कांदा' }
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const current = this.props.lang || 'mr';
+    return { ...STRINGS[current] };
+  }
+}
+</script>
+</body>
+</html>

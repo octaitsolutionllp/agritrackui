@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Patrick Hand', 'Noto Sans Devanagari', cursive; color: #33402f; }
+    a { color: #6b8a5a; } a:hover { color: #4f6a41; }
+    .frame { width: 390px; height: 844px; background: #faf7f0; border: 2.5px solid #33402f; border-radius: 30px; box-sizing: border-box; overflow: hidden; position: relative; }
+    .screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    .card { border: 2px solid #33402f; border-radius: 10px; background: #fff; padding: 14px; }
+    .field-row { display:flex; justify-content:space-between; padding: 8px 4px; border-bottom: 1.5px dashed #cfc9b8; font-size:15px; }
+    .fab { position:absolute; right:20px; bottom:90px; width:52px; height:52px; border-radius:50%; background:#6b8a5a; border:2px solid #33402f; display:flex; align-items:center; justify-content:center; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="screen">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:20px 20px 10px;">
+      <div style="font-size:22px;">{{title}}</div>
+      <div class="card" style="padding:6px 14px; font-size:15px;">{{addBtn}}</div>
+    </div>
+
+    <div style="padding: 10px 20px; display:flex; flex-direction:column; gap:14px; flex:1; overflow:hidden;">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <div style="font-size:18px;">Riverside Farm</div>
+          <div style="font-size:14px; color:#8a8578;">5 {{acres}}</div>
+        </div>
+        <div style="margin-top:6px;">
+          <div class="field-row"><span>{{fieldA}}</span><span style="color:#8a8578;">2 {{acres}} · {{tomato}}</span></div>
+          <div class="field-row"><span>{{fieldB}}</span><span style="color:#8a8578;">3 {{acres}} · {{wheat}}</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <div style="font-size:18px;">Hilltop Farm</div>
+          <div style="font-size:14px; color:#8a8578;">2 {{acres}}</div>
+        </div>
+        <div style="margin-top:6px;">
+          <div class="field-row" style="border-bottom:none;"><span>{{fieldC}}</span><span style="color:#8a8578;">2 {{acres}} · {{empty}}</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fab">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#faf7f0" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+    </div>
+
+    <div style="border-top:2px solid #33402f; padding:10px 6px 16px; background:#fff; text-align:center; font-size:12px; color:#8a8578;">
+      {{navHome}} · {{navFarms}} · {{navCycles}} · {{navExpenses}} · {{navReports}}
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"lang":{"editor":"enum","default":"mr","options":["en","hi","mr"],"section":"Language"}}'>
+const STRINGS = {
+  en: { title: 'My Farms', addBtn: '+ Add', acres: 'acres', fieldA: 'Field A', fieldB: 'Field B', fieldC: 'Field C', tomato: 'Tomato', wheat: 'Wheat', empty: 'empty',
+    navHome: 'Home', navFarms: 'Farms', navCycles: 'Cycles', navExpenses: 'Expenses', navReports: 'Reports' },
+  hi: { title: 'मेरे खेत', addBtn: '+ जोड़ें', acres: 'एकड़', fieldA: 'खेत A', fieldB: 'खेत B', fieldC: 'खेत C', tomato: 'टमाटर', wheat: 'गेहूं', empty: 'खाली',
+    navHome: 'होम', navFarms: 'खेत', navCycles: 'चक्र', navExpenses: 'खर्च', navReports: 'रिपोर्ट' },
+  mr: { title: 'माझी शेती', addBtn: '+ जोडा', acres: 'एकर', fieldA: 'शेत A', fieldB: 'शेत B', fieldC: 'शेत C', tomato: 'टोमॅटो', wheat: 'गहू', empty: 'रिकामे',
+    navHome: 'मुख्यपृष्ठ', navFarms: 'शेत', navCycles: 'चक्रे', navExpenses: 'खर्च', navReports: 'अहवाल' }
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const current = this.props.lang || 'mr';
+    return { ...STRINGS[current] };
+  }
+}
+</script>
+</body>
+</html>

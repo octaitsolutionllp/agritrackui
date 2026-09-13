@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Patrick Hand', 'Noto Sans Devanagari', cursive; color: #33402f; }
+    a { color: #6b8a5a; } a:hover { color: #4f6a41; }
+    .frame { width: 390px; height: 844px; background: #faf7f0; border: 2.5px solid #33402f; border-radius: 30px; box-sizing: border-box; overflow: hidden; position: relative; }
+    .screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    .card { border: 2px solid #33402f; border-radius: 10px; background: #fff; padding: 14px; margin-bottom: 10px; }
+    .chip { border:2px solid #33402f; border-radius:6px; padding:5px 10px; font-size:13px; }
+    .section { font-size:14px; color:#8a8578; margin: 14px 0 8px; letter-spacing:0.5px; }
+  </style>
+</helmet>
+<div class="frame">
+  <div class="screen">
+    <div style="padding:20px 20px 0;">
+      <div style="font-size:21px;">{{title}}</div>
+    </div>
+
+    <div style="padding:0 20px; flex:1; overflow:hidden;">
+      <div class="section">{{today}}</div>
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="1.6"><path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/></svg>
+          <div style="font-size:15px;">{{waterA}}</div>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <div class="chip" style="background:#6b8a5a; color:#faf7f0;">{{markDone}}</div>
+          <div class="chip">{{snooze}}</div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#33402f" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+          <div style="font-size:15px;">{{pesticideB}}</div>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <div class="chip" style="background:#6b8a5a; color:#faf7f0;">{{markDone}}</div>
+          <div class="chip">{{snooze}}</div>
+        </div>
+      </div>
+
+      <div class="section">{{upcoming}}</div>
+      <div class="card" style="display:flex; align-items:center; gap:10px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a8578" stroke-width="1.6"><path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/></svg>
+        <div style="font-size:14px; color:#8a8578;">{{waterC}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"lang":{"editor":"enum","default":"mr","options":["en","hi","mr"],"section":"Language"}}'>
+const STRINGS = {
+  en: { title: 'Reminders', today: 'Today', waterA: 'Water Field A — Tomato', pesticideB: 'Pesticide Field B — Wheat',
+    markDone: 'Mark Done', snooze: 'Snooze', upcoming: 'Upcoming', waterC: 'Water Field C — in 2 days' },
+  hi: { title: 'अनुस्मारक', today: 'आज', waterA: 'खेत A को पानी दें — टमाटर', pesticideB: 'खेत B में कीटनाशक — गेहूं',
+    markDone: 'पूर्ण चिह्नित करें', snooze: 'स्नूज़', upcoming: 'आगामी', waterC: 'खेत C को पानी दें — 2 दिन में' },
+  mr: { title: 'सूचना', today: 'आज', waterA: 'शेत A ला पाणी द्या — टोमॅटो', pesticideB: 'शेत B मध्ये कीटकनाशक — गहू',
+    markDone: 'पूर्ण म्हणून चिन्हांकित करा', snooze: 'स्नूझ', upcoming: 'आगामी', waterC: 'शेत C ला पाणी द्या — 2 दिवसांत' }
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const current = this.props.lang || 'mr';
+    return { ...STRINGS[current] };
+  }
+}
+</script>
+</body>
+</html>

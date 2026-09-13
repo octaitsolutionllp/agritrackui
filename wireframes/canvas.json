@@ -1,0 +1,16 @@
+{
+  "artboards": [
+    { "file": "Login.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "1. Login / Signup" },
+    { "file": "Main.dc.html", "x": 490, "y": 0, "w": 390, "h": 844, "title": "2. Dashboard" },
+    { "file": "Farms.dc.html", "x": 980, "y": 0, "w": 390, "h": 844, "title": "3. Farms & Fields" },
+    { "file": "CropCycle.dc.html", "x": 1470, "y": 0, "w": 390, "h": 844, "title": "4. Crop Cycle" },
+    { "file": "LogActivity.dc.html", "x": 0, "y": 984, "w": 390, "h": 844, "title": "5. Log Activity" },
+    { "file": "Expenses.dc.html", "x": 490, "y": 984, "w": 390, "h": 844, "title": "6. Expenses" },
+    { "file": "Reports.dc.html", "x": 980, "y": 984, "w": 390, "h": 844, "title": "7. Reports / P&L" },
+    { "file": "Reminders.dc.html", "x": 1470, "y": 984, "w": 390, "h": 844, "title": "8. Reminders" }
+  ],
+  "annotations": [
+    { "id": "flow-note", "x": 0, "y": -80, "w": 460, "text": "AgriTrack — v1 wireframes\nLogin -> Dashboard -> Farms/Cycles -> Log activity/expense -> Reports & Reminders" }
+  ],
+  "launch": { "view": "canvas" }
+}
