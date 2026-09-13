@@ -48,6 +48,7 @@ export const strings = {
       plotNamePlaceholder: 'Plot name',
       plotAreaPlaceholder: 'Area (acres)',
       soilTypePlaceholder: 'Soil type',
+      noActiveCrop: 'No active crop cycle',
     },
     cropCycle: {
       sownLabel: 'Sown',
@@ -223,6 +224,7 @@ export const strings = {
       plotNamePlaceholder: 'प्लॉट का नाम',
       plotAreaPlaceholder: 'क्षेत्रफल (एकड़)',
       soilTypePlaceholder: 'मिट्टी का प्रकार',
+      noActiveCrop: 'कोई सक्रिय फसल चक्र नहीं',
     },
     cropCycle: {
       sownLabel: 'बुवाई',
@@ -398,6 +400,7 @@ export const strings = {
       plotNamePlaceholder: 'प्लॉटचे नाव',
       plotAreaPlaceholder: 'क्षेत्रफळ (एकर)',
       soilTypePlaceholder: 'मातीचा प्रकार',
+      noActiveCrop: 'सक्रिय पीक चक्र नाही',
     },
     cropCycle: {
       sownLabel: 'पेरणी',
