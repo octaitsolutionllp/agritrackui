@@ -4,6 +4,7 @@ import { FlatList, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'r
 import { createFarm, createField, listFarms } from '../api/farms';
 import { parseOptionalNumber } from '../utils/numbers';
 import EmptyState from '../components/EmptyState';
+import HelpTooltip from '../components/HelpTooltip';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Screen from '../components/Screen';
 import ScreenHeader from '../components/ScreenHeader';
@@ -38,9 +39,12 @@ export default function FarmsScreen() {
       <ScreenHeader
         title={t.title}
         right={
-          <Pressable style={styles.addChip} onPress={() => setAddFarmVisible(true)}>
-            <Text style={styles.addChipText}>{t.addBtn}</Text>
-          </Pressable>
+          <>
+            <HelpTooltip title={strings.help.farmsTooltipTitle} body={strings.help.farmsTooltipBody} />
+            <Pressable style={styles.addChip} onPress={() => setAddFarmVisible(true)}>
+              <Text style={styles.addChipText}>{t.addBtn}</Text>
+            </Pressable>
+          </>
         }
       />
 
@@ -69,7 +73,7 @@ export default function FarmsScreen() {
               </View>
             ))}
             <Pressable style={styles.addFieldLink} onPress={() => setAddFieldFarmId(item.id)}>
-              <Text style={styles.addFieldLinkText}>{t.addBtn}</Text>
+              <Text style={styles.addFieldLinkText}>{t.addPlotBtn}</Text>
             </Pressable>
           </View>
         )}
@@ -79,17 +83,19 @@ export default function FarmsScreen() {
         visible={addFarmVisible}
         onClose={() => setAddFarmVisible(false)}
         onCreated={load}
+        strings={t}
       />
       <AddFieldModal
         farmId={addFieldFarmId}
         onClose={() => setAddFieldFarmId(null)}
         onCreated={load}
+        strings={t}
       />
     </Screen>
   );
 }
 
-function AddFarmModal({ visible, onClose, onCreated }) {
+function AddFarmModal({ visible, onClose, onCreated, strings: t }) {
   const [name, setName] = useState('');
   const [area, setArea] = useState('');
   const [error, setError] = useState(null);
@@ -119,11 +125,11 @@ function AddFarmModal({ visible, onClose, onCreated }) {
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <Pressable style={styles.backdrop} onPress={onClose} />
       <View style={styles.sheet}>
-        <Text style={styles.sheetTitle}>Add Farm</Text>
-        <TextInput style={styles.input} placeholder="Farm name" value={name} onChangeText={setName} />
+        <Text style={styles.sheetTitle}>{t.addFarmTitle}</Text>
+        <TextInput style={styles.input} placeholder={t.farmNamePlaceholder} value={name} onChangeText={setName} />
         <TextInput
           style={styles.input}
-          placeholder="Total area (acres)"
+          placeholder={t.totalAreaPlaceholder}
           keyboardType="numeric"
           value={area}
           onChangeText={setArea}
@@ -137,7 +143,7 @@ function AddFarmModal({ visible, onClose, onCreated }) {
   );
 }
 
-function AddFieldModal({ farmId, onClose, onCreated }) {
+function AddFieldModal({ farmId, onClose, onCreated, strings: t }) {
   const [name, setName] = useState('');
   const [area, setArea] = useState('');
   const [soilType, setSoilType] = useState('');
@@ -169,16 +175,16 @@ function AddFieldModal({ farmId, onClose, onCreated }) {
     <Modal visible={!!farmId} transparent animationType="slide" onRequestClose={onClose}>
       <Pressable style={styles.backdrop} onPress={onClose} />
       <View style={styles.sheet}>
-        <Text style={styles.sheetTitle}>Add Field</Text>
-        <TextInput style={styles.input} placeholder="Field name" value={name} onChangeText={setName} />
+        <Text style={styles.sheetTitle}>{t.addPlotTitle}</Text>
+        <TextInput style={styles.input} placeholder={t.plotNamePlaceholder} value={name} onChangeText={setName} />
         <TextInput
           style={styles.input}
-          placeholder="Area (acres)"
+          placeholder={t.plotAreaPlaceholder}
           keyboardType="numeric"
           value={area}
           onChangeText={setArea}
         />
-        <TextInput style={styles.input} placeholder="Soil type" value={soilType} onChangeText={setSoilType} />
+        <TextInput style={styles.input} placeholder={t.soilTypePlaceholder} value={soilType} onChangeText={setSoilType} />
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
         <Pressable style={styles.button} onPress={submit}>
           <Text style={styles.buttonText}>Save</Text>

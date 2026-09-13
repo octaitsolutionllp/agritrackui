@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { changePassword, deleteAccount, updateLanguage } from '../api/auth';
+import GuideModal from '../components/GuideModal';
 import LanguagePicker from '../components/LanguagePicker';
 import Screen from '../components/Screen';
 import ScreenHeader from '../components/ScreenHeader';
@@ -19,6 +20,7 @@ export default function ProfileScreen({ navigation }) {
   const [message, setMessage] = useState(null); // { type: 'error' | 'success', text }
   const [saving, setSaving] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [guideVisible, setGuideVisible] = useState(false);
 
   const handleLanguageChange = async (code) => {
     await setLanguage(code);
@@ -63,6 +65,10 @@ export default function ProfileScreen({ navigation }) {
 
       <Pressable style={styles.myCropsButton} onPress={() => navigation.navigate('SelectCrops')}>
         <Text style={styles.myCropsButtonText}>{strings.myCrops.title}</Text>
+      </Pressable>
+
+      <Pressable style={styles.myCropsButton} onPress={() => setGuideVisible(true)}>
+        <Text style={styles.myCropsButtonText}>{strings.help.menuLabel}</Text>
       </Pressable>
 
       <View style={styles.card}>
@@ -116,6 +122,7 @@ export default function ProfileScreen({ navigation }) {
       onDeleted={signOut}
       strings={t}
     />
+    <GuideModal visible={guideVisible} onClose={() => setGuideVisible(false)} />
     </Screen>
   );
 }

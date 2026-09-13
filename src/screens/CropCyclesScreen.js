@@ -6,6 +6,7 @@ import { createCropCycle, listCropCycles } from '../api/cropCycles';
 import { listFarms } from '../api/farms';
 import DateField from '../components/DateField';
 import EmptyState from '../components/EmptyState';
+import HelpTooltip from '../components/HelpTooltip';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Screen from '../components/Screen';
 import ScreenHeader from '../components/ScreenHeader';
@@ -38,9 +39,12 @@ export default function CropCyclesScreen({ navigation }) {
       <ScreenHeader
         title={strings.common.navCycles}
         right={
-          <Pressable style={styles.addChip} onPress={() => setStartVisible(true)}>
-            <Text style={styles.addChipText}>+</Text>
-          </Pressable>
+          <>
+            <HelpTooltip title={strings.help.cropCyclesTooltipTitle} body={strings.help.cropCyclesTooltipBody} />
+            <Pressable style={styles.addChip} onPress={() => setStartVisible(true)}>
+              <Text style={styles.addChipText}>+</Text>
+            </Pressable>
+          </>
         }
       />
       <FlatList
@@ -96,11 +100,11 @@ function StartCropCycleModal({ visible, onClose, onCreated }) {
 
   const submit = async () => {
     if (fields.length === 0) {
-      setValidationMessage('Add a farm and field first, from the Farms tab.');
+      setValidationMessage('Add a farm and plot first, from the Farms tab.');
       return;
     }
     if (!fieldId || !cropTypeId) {
-      setValidationMessage('Please select a field and a crop.');
+      setValidationMessage('Please select a plot and a crop.');
       return;
     }
     setValidationMessage(null);
@@ -116,9 +120,9 @@ function StartCropCycleModal({ visible, onClose, onCreated }) {
       <View style={styles.sheet}>
         <Text style={styles.sheetTitle}>Start Crop Cycle</Text>
 
-        <Text style={styles.pickerLabel}>Field</Text>
+        <Text style={styles.pickerLabel}>Plot</Text>
         {fields.length === 0 ? (
-          <Text style={styles.emptyHint}>No fields yet — add a farm and field from the Farms tab first.</Text>
+          <Text style={styles.emptyHint}>No plots yet — add a farm and plot from the Farms tab first.</Text>
         ) : null}
         <View style={styles.pickerRow}>
           {fields.map((field) => (

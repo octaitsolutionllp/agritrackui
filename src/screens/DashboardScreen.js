@@ -1,9 +1,10 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { listCropCycles } from '../api/cropCycles';
 import { getPnlSummary } from '../api/reports';
 import EmptyState from '../components/EmptyState';
+import GuideModal from '../components/GuideModal';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PnlCard from '../components/PnlCard';
 import Screen from '../components/Screen';
@@ -12,6 +13,9 @@ import { useLanguage } from '../context/LanguageContext';
 import { syncReminderNotifications } from '../services/reminderEngine';
 import { colors } from '../theme/colors';
 import { translateCropName } from '../utils/cropNames';
+import { storage } from '../utils/storage';
+
+const GUIDE_SEEN_KEY_PREFIX = 'agritrack_guide_seen_';
 
 export default function DashboardScreen({ navigation }) {
   const { user } = useAuth();
@@ -23,6 +27,20 @@ export default function DashboardScreen({ navigation }) {
   const [pnl, setPnl] = useState({ income: 0, expense: 0, profit: 0 });
   const [cycles, setCycles] = useState([]);
   const [reminders, setReminders] = useState([]);
+  const [guideVisible, setGuideVisible] = useState(false);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    (async () => {
+      const seen = await storage.getItem(`${GUIDE_SEEN_KEY_PREFIX}${user.id}`);
+      if (!seen) setGuideVisible(true);
+    })();
+  }, [user?.id]);
+
+  const closeGuide = () => {
+    setGuideVisible(false);
+    if (user?.id) storage.setItem(`${GUIDE_SEEN_KEY_PREFIX}${user.id}`, '1');
+  };
 
   const load = useCallback(async () => {
     const [summary, activeCycles, reminderData] = await Promise.all([
@@ -109,6 +127,7 @@ export default function DashboardScreen({ navigation }) {
         </Pressable>
       )}
     />
+    <GuideModal visible={guideVisible} onClose={closeGuide} />
     </Screen>
   );
 }

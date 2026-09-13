@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
   backButton: { marginRight: 8 },
   backArrow: { fontSize: 28, color: colors.ink, lineHeight: 28 },
   title: { fontSize: 22, fontWeight: '600', color: colors.ink, flex: 1 },
-  right: { flexDirection: 'row' },
+  right: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   subtitle: { fontSize: 14, color: colors.mutedInk, marginTop: 4 },
 });
