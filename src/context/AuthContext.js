@@ -51,13 +51,13 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const register = async ({ name, emailOrPhone, password, preferredLanguage, captchaToken, captchaAnswer }) => {
-    const response = await authApi.register({ name, emailOrPhone, password, preferredLanguage, captchaToken, captchaAnswer });
+  const register = async ({ name, emailOrPhone, password, preferredLanguage }) => {
+    const response = await authApi.register({ name, emailOrPhone, password, preferredLanguage });
     await persistSession(response, { applyServerLanguage: true });
   };
 
-  const signIn = async ({ emailOrPhone, password, captchaToken, captchaAnswer }) => {
-    const response = await authApi.login({ emailOrPhone, password, captchaToken, captchaAnswer });
+  const signIn = async ({ emailOrPhone, password }) => {
+    const response = await authApi.login({ emailOrPhone, password });
     await persistSession(response, { applyServerLanguage: false });
   };
 

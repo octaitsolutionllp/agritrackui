@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -9,7 +9,6 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { getCaptcha } from '../api/auth';
 import LanguagePicker from '../components/LanguagePicker';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -24,30 +23,14 @@ export default function LoginScreen() {
   const [name, setName] = useState('');
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [captcha, setCaptcha] = useState(null); // { token, question }
-  const [captchaAnswer, setCaptchaAnswer] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
-
-  const refreshCaptcha = async () => {
-    setCaptchaAnswer('');
-    try {
-      setCaptcha(await getCaptcha());
-    } catch {
-      setCaptcha(null);
-    }
-  };
-
-  useEffect(() => {
-    refreshCaptcha();
-  }, []);
 
   const validate = () => {
     if (isSignup && name.trim().length === 0) return t.nameRequired;
     if (emailOrPhone.trim().length === 0) return t.emailRequired;
     if (password.length === 0) return t.passwordRequired;
     if (isSignup && password.length < 6) return t.passwordTooShort;
-    if (captchaAnswer.trim().length === 0) return t.captchaRequired;
     return '';
   };
 
@@ -60,17 +43,13 @@ export default function LoginScreen() {
     setError('');
     setSubmitting(true);
     try {
-      const captchaFields = { captchaToken: captcha?.token, captchaAnswer: captchaAnswer.trim() };
       if (isSignup) {
-        await register({ name: name.trim(), emailOrPhone: emailOrPhone.trim(), password, preferredLanguage: language, ...captchaFields });
+        await register({ name: name.trim(), emailOrPhone: emailOrPhone.trim(), password, preferredLanguage: language });
       } else {
-        await signIn({ emailOrPhone: emailOrPhone.trim(), password, ...captchaFields });
+        await signIn({ emailOrPhone: emailOrPhone.trim(), password });
       }
     } catch (err) {
       setError(err.response?.data?.message ?? 'Something went wrong. Please try again.');
-      // The token is consumed server-side on every attempt (right or wrong), so a retry
-      // always needs a fresh question.
-      refreshCaptcha();
     } finally {
       setSubmitting(false);
     }
@@ -115,19 +94,6 @@ export default function LoginScreen() {
           value={password}
           onChangeText={setPassword}
         />
-        {captcha ? (
-          <View style={styles.captchaRow}>
-            <Text style={styles.captchaLabel}>{t.captchaLabel(captcha.question)}</Text>
-            <TextInput
-              style={styles.captchaInput}
-              placeholder={t.captchaPlaceholder}
-              placeholderTextColor={colors.mutedInk}
-              keyboardType="numeric"
-              value={captchaAnswer}
-              onChangeText={setCaptchaAnswer}
-            />
-          </View>
-        ) : null}
       </View>
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -154,18 +120,6 @@ const styles = StyleSheet.create({
   tagline: { fontSize: 15, color: colors.mutedInk },
   form: { gap: 14 },
   input: {
-    borderWidth: 1.5,
-    borderColor: colors.border,
-    borderRadius: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: colors.ink,
-    backgroundColor: colors.card,
-  },
-  captchaRow: { gap: 8 },
-  captchaLabel: { fontSize: 14, color: colors.ink, fontWeight: '600' },
-  captchaInput: {
     borderWidth: 1.5,
     borderColor: colors.border,
     borderRadius: 8,

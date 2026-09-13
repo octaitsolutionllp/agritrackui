@@ -24,9 +24,6 @@ export const strings = {
       emailRequired: 'Please enter your email or phone.',
       passwordRequired: 'Please enter your password.',
       passwordTooShort: 'Password must be at least 6 characters.',
-      captchaLabel: (question) => `What is ${question}?`,
-      captchaPlaceholder: 'Your answer',
-      captchaRequired: 'Please answer the question above.',
     },
     dashboard: {
       greeting: (name) => `Hi, ${name}`,
@@ -205,9 +202,6 @@ export const strings = {
       emailRequired: 'कृपया ईमेल या फोन नंबर भरें।',
       passwordRequired: 'कृपया पासवर्ड भरें।',
       passwordTooShort: 'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।',
-      captchaLabel: (question) => `${question} कितना होता है?`,
-      captchaPlaceholder: 'आपका उत्तर',
-      captchaRequired: 'कृपया ऊपर दिए गए प्रश्न का उत्तर दें।',
     },
     dashboard: {
       greeting: (name) => `नमस्ते, ${name}`,
@@ -386,9 +380,6 @@ export const strings = {
       emailRequired: 'कृपया ईमेल किंवा फोन नंबर भरा.',
       passwordRequired: 'कृपया पासवर्ड भरा.',
       passwordTooShort: 'पासवर्ड किमान 6 अक्षरांचा असावा.',
-      captchaLabel: (question) => `${question} किती होते?`,
-      captchaPlaceholder: 'तुमचे उत्तर',
-      captchaRequired: 'कृपया वरील प्रश्नाचे उत्तर द्या.',
     },
     dashboard: {
       greeting: (name) => `नमस्कार, ${name}`,
