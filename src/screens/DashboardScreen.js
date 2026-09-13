@@ -13,6 +13,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { syncReminderNotifications } from '../services/reminderEngine';
 import { colors } from '../theme/colors';
 import { translateCropName } from '../utils/cropNames';
+import { translateStageName } from '../utils/stageNames';
 import { storage } from '../utils/storage';
 
 const GUIDE_SEEN_KEY_PREFIX = 'agritrack_guide_seen_';
@@ -120,9 +121,12 @@ export default function DashboardScreen({ navigation }) {
             {translateCropName(item.cropTypeName, strings.common)}
             {item.cycleLabel ? ` · ${item.cycleLabel}` : ''}
           </Text>
-          <Text style={styles.cycleField}>{item.fieldName}</Text>
+          <Text style={styles.cycleField}>
+            {item.fieldName}
+            {item.fieldAreaAcres ? ` · ${item.fieldAreaAcres} ${strings.farms.acres}` : ''}
+          </Text>
           <View style={styles.stagePill}>
-            <Text style={styles.stagePillText}>{item.currentStage}</Text>
+            <Text style={styles.stagePillText}>{translateStageName(item.currentStage, strings.cropCycle)}</Text>
           </View>
         </Pressable>
       )}

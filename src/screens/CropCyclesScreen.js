@@ -13,6 +13,7 @@ import ScreenHeader from '../components/ScreenHeader';
 import { useLanguage } from '../context/LanguageContext';
 import { colors } from '../theme/colors';
 import { translateCropName } from '../utils/cropNames';
+import { translateStageName } from '../utils/stageNames';
 
 export default function CropCyclesScreen({ navigation }) {
   const { strings } = useLanguage();
@@ -62,10 +63,13 @@ export default function CropCyclesScreen({ navigation }) {
                 {translateCropName(item.cropTypeName, strings.common)}
                 {item.cycleLabel ? ` · ${item.cycleLabel}` : ''}
               </Text>
-              <Text style={styles.field}>{item.fieldName}</Text>
+              <Text style={styles.field}>
+                {item.fieldName}
+                {item.fieldAreaAcres ? ` · ${item.fieldAreaAcres} ${strings.farms.acres}` : ''}
+              </Text>
             </View>
             <View style={styles.stagePill}>
-              <Text style={styles.stagePillText}>{item.currentStage}</Text>
+              <Text style={styles.stagePillText}>{translateStageName(item.currentStage, strings.cropCycle)}</Text>
             </View>
           </Pressable>
         )}
@@ -133,6 +137,7 @@ function StartCropCycleModal({ visible, onClose, onCreated }) {
             >
               <Text style={[styles.chipText, fieldId === field.id && styles.chipTextSelected]}>
                 {field.farmName} · {field.name}
+                {field.areaAcres ? ` · ${field.areaAcres} ${strings.farms.acres}` : ''}
               </Text>
             </Pressable>
           ))}

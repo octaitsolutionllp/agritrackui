@@ -1,13 +1,19 @@
 import client from './client';
 
-export function register({ name, emailOrPhone, password, preferredLanguage }) {
+export function getCaptcha() {
+  return client.get('/api/auth/captcha').then((res) => res.data);
+}
+
+export function register({ name, emailOrPhone, password, preferredLanguage, captchaToken, captchaAnswer }) {
   return client
-    .post('/api/auth/register', { name, emailOrPhone, password, preferredLanguage })
+    .post('/api/auth/register', { name, emailOrPhone, password, preferredLanguage, captchaToken, captchaAnswer })
     .then((res) => res.data);
 }
 
-export function login({ emailOrPhone, password }) {
-  return client.post('/api/auth/login', { emailOrPhone, password }).then((res) => res.data);
+export function login({ emailOrPhone, password, captchaToken, captchaAnswer }) {
+  return client
+    .post('/api/auth/login', { emailOrPhone, password, captchaToken, captchaAnswer })
+    .then((res) => res.data);
 }
 
 export function updateLanguage(preferredLanguage) {

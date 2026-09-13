@@ -13,4 +13,7 @@ export const colors = {
   gold: '#E4B23A',
   clay: '#B5713C',
   card: '#FFFFFF',
+  water: '#2E7DAF',
+  waterTint: '#E4F1F8',
+  goldTint: '#FBF1DA',
 };

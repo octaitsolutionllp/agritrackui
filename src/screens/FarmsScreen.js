@@ -5,6 +5,7 @@ import { createFarm, createField, listFarms } from '../api/farms';
 import { listCropCycles } from '../api/cropCycles';
 import { parseOptionalNumber } from '../utils/numbers';
 import { translateCropName } from '../utils/cropNames';
+import { translateStageName } from '../utils/stageNames';
 import EmptyState from '../components/EmptyState';
 import HelpTooltip from '../components/HelpTooltip';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -87,7 +88,7 @@ export default function FarmsScreen() {
                   </View>
                   <Text style={activeCycle ? styles.fieldCropActive : styles.fieldCropEmpty}>
                     {activeCycle
-                      ? `${translateCropName(activeCycle.cropTypeName, strings.common)} · ${activeCycle.currentStage}`
+                      ? `${translateCropName(activeCycle.cropTypeName, strings.common)} · ${translateStageName(activeCycle.currentStage, strings.cropCycle)}`
                       : t.noActiveCrop}
                   </Text>
                 </View>
