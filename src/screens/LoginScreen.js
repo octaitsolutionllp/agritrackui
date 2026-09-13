@@ -26,14 +26,27 @@ export default function LoginScreen() {
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
+  const validate = () => {
+    if (isSignup && name.trim().length === 0) return t.nameRequired;
+    if (emailOrPhone.trim().length === 0) return t.emailRequired;
+    if (password.length === 0) return t.passwordRequired;
+    if (isSignup && password.length < 6) return t.passwordTooShort;
+    return '';
+  };
+
   const handleSubmit = async () => {
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     setError('');
     setSubmitting(true);
     try {
       if (isSignup) {
-        await register({ name, emailOrPhone, password, preferredLanguage: language });
+        await register({ name: name.trim(), emailOrPhone: emailOrPhone.trim(), password, preferredLanguage: language });
       } else {
-        await signIn({ emailOrPhone, password });
+        await signIn({ emailOrPhone: emailOrPhone.trim(), password });
       }
     } catch (err) {
       setError(err.response?.data?.message ?? 'Something went wrong. Please try again.');
@@ -58,7 +71,7 @@ export default function LoginScreen() {
         {isSignup ? (
           <TextInput
             style={styles.input}
-            placeholder="Name"
+            placeholder={t.namePlaceholder}
             placeholderTextColor={colors.mutedInk}
             value={name}
             onChangeText={setName}
