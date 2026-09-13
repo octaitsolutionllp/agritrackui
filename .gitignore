@@ -39,3 +39,11 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Deploy: StaticHost .NET build output + zipped package (rebuilt each deploy from `dist/`,
+# copied in fresh before publish — see the deploy notes in CLAUDE.md)
+deploy/StaticHost/bin/
+deploy/StaticHost/obj/
+deploy/StaticHost/publish_output/
+deploy/StaticHost/wwwroot/
+deploy/*.zip

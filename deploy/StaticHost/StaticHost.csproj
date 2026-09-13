@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Built on Windows, the static-web-assets manifest embeds backslash paths that Azure's
+         Linux zip-deploy pipeline can't stat, failing the whole deploy. Not needed anyway —
+         wwwroot/ is served as plain files, not through the static-web-assets pipeline. -->
+    <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
+  </PropertyGroup>
+
+</Project>
