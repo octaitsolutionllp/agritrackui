@@ -38,8 +38,8 @@ export function AuthProvider({ children }) {
   // override whatever the user just picked on the login screen for *this* session, which is the
   // bug reported. So login keeps whatever language is already active locally.
   const persistSession = async (authResponse, { applyServerLanguage }) => {
-    const { token: newToken, userId, name, emailOrPhone, preferredLanguage, hasCompletedCropSelection } = authResponse;
-    const newUser = { id: userId, name, emailOrPhone, preferredLanguage, hasCompletedCropSelection };
+    const { token: newToken, userId, name, emailOrPhone, preferredLanguage, hasCompletedCropSelection, role } = authResponse;
+    const newUser = { id: userId, name, emailOrPhone, preferredLanguage, hasCompletedCropSelection, role };
     await Promise.all([
       storage.setItem(TOKEN_KEY, newToken),
       storage.setItem(USER_KEY, JSON.stringify(newUser)),

@@ -71,6 +71,12 @@ export default function ProfileScreen({ navigation }) {
         <Text style={styles.myCropsButtonText}>{strings.help.menuLabel}</Text>
       </Pressable>
 
+      {user?.role === 'Admin' ? (
+        <Pressable style={styles.myCropsButton} onPress={() => navigation.navigate('Admin')}>
+          <Text style={styles.myCropsButtonText}>{strings.admin.title}</Text>
+        </Pressable>
+      ) : null}
+
       <View style={styles.card}>
         <Text style={styles.label}>{t.changePassword}</Text>
         <TextInput

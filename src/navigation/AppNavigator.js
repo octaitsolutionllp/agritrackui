@@ -7,6 +7,8 @@ import { ActivityIndicator, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import AdminScreen from '../screens/AdminScreen';
+import AdminUserDetailScreen from '../screens/AdminUserDetailScreen';
 import CropCycleScreen from '../screens/CropCycleScreen';
 import CropCyclesScreen from '../screens/CropCyclesScreen';
 import DashboardScreen from '../screens/DashboardScreen';
@@ -103,6 +105,8 @@ export default function AppNavigator() {
             <Stack.Screen name="Expenses" component={ExpensesScreen} />
             <Stack.Screen name="Harvest" component={HarvestScreen} />
             <Stack.Screen name="SelectCrops" component={SelectCropsScreen} />
+            <Stack.Screen name="Admin" component={AdminScreen} />
+            <Stack.Screen name="AdminUserDetail" component={AdminUserDetailScreen} />
             <Stack.Screen
               name="LogActivity"
               component={LogActivityScreen}
