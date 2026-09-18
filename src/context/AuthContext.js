@@ -78,8 +78,21 @@ export function AuthProvider({ children }) {
     });
   };
 
+  // The JWT's embedded Name claim goes stale after this, but nothing server-side reads it back
+  // (see JwtTokenGenerator) — the app's own idea of "who am I" is this local `user` object, so
+  // updating it here is enough without forcing a re-login for a new token.
+  const updateProfile = async ({ name, emailOrPhone }) => {
+    const response = await authApi.updateProfile({ name, emailOrPhone });
+    setUser((prev) => {
+      if (!prev) return prev;
+      const updated = { ...prev, name: response.name, emailOrPhone: response.emailOrPhone };
+      storage.setItem(USER_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  };
+
   const value = useMemo(
-    () => ({ user, token, loading, register, signIn, signOut, markCropSelectionComplete }),
+    () => ({ user, token, loading, register, signIn, signOut, markCropSelectionComplete, updateProfile }),
     [user, token, loading]
   );
 

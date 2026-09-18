@@ -20,11 +20,12 @@ export default function ReportsScreen() {
   const [loading, setLoading] = useState(true);
   const [farms, setFarms] = useState([]);
   const [selectedFarmId, setSelectedFarmId] = useState(null); // null = All Farms
+  const [selectedFieldId, setSelectedFieldId] = useState(null); // null = All Plots (within the selected farm)
   const [summary, setSummary] = useState({ totalIncome: 0, totalExpense: 0, profit: 0, perCrop: [] });
   const [categoryBreakdown, setCategoryBreakdown] = useState([]);
 
-  const load = useCallback(async (farmId) => {
-    const [farmsData, summaryData] = await Promise.all([listFarms(), getPnlSummary(farmId ?? undefined)]);
+  const load = useCallback(async (farmId, fieldId) => {
+    const [farmsData, summaryData] = await Promise.all([listFarms(), getPnlSummary(farmId ?? undefined, fieldId ?? undefined)]);
     setFarms(farmsData);
     setSummary(summaryData);
 
@@ -43,11 +44,19 @@ export default function ReportsScreen() {
   useFocusEffect(
     useCallback(() => {
       setLoading(true);
-      load(selectedFarmId).finally(() => setLoading(false));
-    }, [load, selectedFarmId])
+      load(selectedFarmId, selectedFieldId).finally(() => setLoading(false));
+    }, [load, selectedFarmId, selectedFieldId])
   );
 
+  const selectFarm = (farmId) => {
+    setSelectedFarmId(farmId);
+    setSelectedFieldId(null); // switching farm (or back to "All Farms") always clears the plot filter
+  };
+
   if (loading) return <LoadingSpinner />;
+
+  const selectedFarm = farms.find((f) => f.id === selectedFarmId);
+  const plotsForSelectedFarm = selectedFarm?.fields ?? [];
 
   const maxProfit = Math.max(...summary.perCrop.map((c) => Math.abs(c.profit)), 1);
   const categoryLabels = {
@@ -68,7 +77,7 @@ export default function ReportsScreen() {
       {farms.length > 0 ? (
         <View style={styles.filterRow}>
           <Pressable
-            onPress={() => setSelectedFarmId(null)}
+            onPress={() => selectFarm(null)}
             style={[styles.filterChip, selectedFarmId === null && styles.filterChipSelected]}
           >
             <Text style={[styles.filterChipText, selectedFarmId === null && styles.filterChipTextSelected]}>
@@ -78,11 +87,35 @@ export default function ReportsScreen() {
           {farms.map((farm) => (
             <Pressable
               key={farm.id}
-              onPress={() => setSelectedFarmId(farm.id)}
+              onPress={() => selectFarm(farm.id)}
               style={[styles.filterChip, selectedFarmId === farm.id && styles.filterChipSelected]}
             >
               <Text style={[styles.filterChipText, selectedFarmId === farm.id && styles.filterChipTextSelected]}>
                 {farm.name}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
+      ) : null}
+
+      {selectedFarmId && plotsForSelectedFarm.length > 0 ? (
+        <View style={styles.filterRow}>
+          <Pressable
+            onPress={() => setSelectedFieldId(null)}
+            style={[styles.filterChipSmall, selectedFieldId === null && styles.filterChipSelected]}
+          >
+            <Text style={[styles.filterChipText, selectedFieldId === null && styles.filterChipTextSelected]}>
+              {t.allPlots}
+            </Text>
+          </Pressable>
+          {plotsForSelectedFarm.map((field) => (
+            <Pressable
+              key={field.id}
+              onPress={() => setSelectedFieldId(field.id)}
+              style={[styles.filterChipSmall, selectedFieldId === field.id && styles.filterChipSelected]}
+            >
+              <Text style={[styles.filterChipText, selectedFieldId === field.id && styles.filterChipTextSelected]}>
+                {field.name}
               </Text>
             </Pressable>
           ))}
@@ -149,6 +182,7 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1.5, borderColor: colors.border, borderRadius: 12, backgroundColor: colors.card, padding: 16 },
   filterRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   filterChip: { borderWidth: 1.5, borderColor: colors.border, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: colors.card },
+  filterChipSmall: { borderWidth: 1.5, borderColor: colors.dashedBorder, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 5, backgroundColor: colors.card },
   filterChipSelected: { backgroundColor: colors.ink },
   filterChipText: { fontSize: 13, color: colors.ink },
   filterChipTextSelected: { color: colors.background },

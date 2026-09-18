@@ -14,6 +14,10 @@ export function updateLanguage(preferredLanguage) {
   return client.put('/api/profile/language', { preferredLanguage }).then((res) => res.data);
 }
 
+export function updateProfile({ name, emailOrPhone }) {
+  return client.put('/api/profile', { name, emailOrPhone }).then((res) => res.data);
+}
+
 export function changePassword({ currentPassword, newPassword }) {
   return client.put('/api/profile/password', { currentPassword, newPassword }).then((res) => res.data);
 }

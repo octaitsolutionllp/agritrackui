@@ -10,9 +10,14 @@ import { useLanguage } from '../context/LanguageContext';
 import { colors } from '../theme/colors';
 
 export default function ProfileScreen({ navigation }) {
-  const { user, signOut } = useAuth();
+  const { user, signOut, updateProfile } = useAuth();
   const { strings, language, setLanguage } = useLanguage();
   const t = strings.profile;
+
+  const [name, setName] = useState(user?.name ?? '');
+  const [emailOrPhone, setEmailOrPhone] = useState(user?.emailOrPhone ?? '');
+  const [profileMessage, setProfileMessage] = useState(null); // { type: 'error' | 'success', text }
+  const [savingProfile, setSavingProfile] = useState(false);
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -28,6 +33,24 @@ export default function ProfileScreen({ navigation }) {
       await updateLanguage(code);
     } catch {
       // best-effort — local UI language already switched regardless of server sync outcome
+    }
+  };
+
+  const handleSaveProfile = async () => {
+    setProfileMessage(null);
+    if (!name.trim() || !emailOrPhone.trim()) return;
+    setSavingProfile(true);
+    try {
+      await updateProfile({ name: name.trim(), emailOrPhone: emailOrPhone.trim() });
+      setProfileMessage({ type: 'success', text: t.profileUpdated });
+    } catch (err) {
+      const isConflict = err.response?.status === 409;
+      setProfileMessage({
+        type: 'error',
+        text: isConflict ? t.emailOrPhoneTaken : err.response?.data?.message ?? 'Something went wrong. Please try again.',
+      });
+    } finally {
+      setSavingProfile(false);
     }
   };
 
@@ -61,6 +84,33 @@ export default function ProfileScreen({ navigation }) {
       <View style={styles.card}>
         <Text style={styles.label}>{t.languageLabel}</Text>
         <LanguagePicker value={language} onChange={handleLanguageChange} />
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.label}>{t.editProfileTitle}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={t.nameLabel}
+          placeholderTextColor={colors.mutedInk}
+          value={name}
+          onChangeText={setName}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={t.emailOrPhoneLabel}
+          placeholderTextColor={colors.mutedInk}
+          autoCapitalize="none"
+          value={emailOrPhone}
+          onChangeText={setEmailOrPhone}
+        />
+        {profileMessage ? (
+          <Text style={[styles.message, profileMessage.type === 'error' ? styles.errorText : styles.successText]}>
+            {profileMessage.text}
+          </Text>
+        ) : null}
+        <Pressable style={styles.button} onPress={handleSaveProfile} disabled={savingProfile}>
+          {savingProfile ? <ActivityIndicator color={colors.background} /> : <Text style={styles.buttonText}>{t.saveBtn}</Text>}
+        </Pressable>
       </View>
 
       <Pressable style={styles.myCropsButton} onPress={() => navigation.navigate('SelectCrops')}>

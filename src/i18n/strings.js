@@ -110,6 +110,7 @@ export const strings = {
       expenseByCategory: 'Expense by category',
       perCropComparison: 'Per-crop comparison',
       allFarms: 'All Farms',
+      allPlots: 'All Plots',
     },
     reminders: {
       title: 'Reminders',
@@ -125,6 +126,11 @@ export const strings = {
     profile: {
       title: 'Profile',
       languageLabel: 'Language',
+      editProfileTitle: 'Edit Profile',
+      nameLabel: 'Name',
+      emailOrPhoneLabel: 'Email or phone',
+      profileUpdated: 'Profile updated successfully',
+      emailOrPhoneTaken: 'Another account is already using this email or phone.',
       changePassword: 'Change Password',
       currentPasswordLabel: 'Current password',
       newPasswordLabel: 'New password',
@@ -321,6 +327,7 @@ export const strings = {
       expenseByCategory: 'श्रेणी अनुसार खर्च',
       perCropComparison: 'फसल-वार तुलना',
       allFarms: 'सभी खेत',
+      allPlots: 'सभी प्लॉट',
     },
     reminders: {
       title: 'अनुस्मारक',
@@ -336,6 +343,11 @@ export const strings = {
     profile: {
       title: 'प्रोफाइल',
       languageLabel: 'भाषा',
+      editProfileTitle: 'प्रोफाइल संपादित करें',
+      nameLabel: 'नाम',
+      emailOrPhoneLabel: 'ईमेल या फोन नंबर',
+      profileUpdated: 'प्रोफाइल सफलतापूर्वक अपडेट हुई',
+      emailOrPhoneTaken: 'यह ईमेल या फोन नंबर पहले से किसी अन्य खाते में उपयोग हो रहा है।',
       changePassword: 'पासवर्ड बदलें',
       currentPasswordLabel: 'वर्तमान पासवर्ड',
       newPasswordLabel: 'नया पासवर्ड',
@@ -532,6 +544,7 @@ export const strings = {
       expenseByCategory: 'प्रकारानुसार खर्च',
       perCropComparison: 'पीकनिहाय तुलना',
       allFarms: 'सर्व शेत',
+      allPlots: 'सर्व प्लॉट',
     },
     reminders: {
       title: 'सूचना',
@@ -547,6 +560,11 @@ export const strings = {
     profile: {
       title: 'प्रोफाइल',
       languageLabel: 'भाषा',
+      editProfileTitle: 'प्रोफाइल संपादित करा',
+      nameLabel: 'नाव',
+      emailOrPhoneLabel: 'ईमेल किंवा फोन नंबर',
+      profileUpdated: 'प्रोफाइल यशस्वीरित्या अपडेट झाली',
+      emailOrPhoneTaken: 'हा ईमेल किंवा फोन नंबर आधीच दुसऱ्या खात्यासाठी वापरला जात आहे.',
       changePassword: 'पासवर्ड बदला',
       currentPasswordLabel: 'सध्याचा पासवर्ड',
       newPasswordLabel: 'नवीन पासवर्ड',
